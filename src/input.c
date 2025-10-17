@@ -12,9 +12,11 @@ int read_input() {
     switch (ch) {
         case 'q': 
         case 'Q': 
+        case KEY_UP:
             return 2;  //L
         case 'd': 
         case 'D': 
+        case KEY_LEFT:
             return 3;  //R
         case 's':
         case 'S':
@@ -22,7 +24,7 @@ int read_input() {
             return 4;  //DOWN
         case 'w':
         case 'W':
-        case KEY_UP:   
+        case KEY_RIGHT:   
             return 5;  //R
         case 'p': 
         case 'P':     

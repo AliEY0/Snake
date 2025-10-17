@@ -5,6 +5,13 @@
 #include <stdlib.h>
 #include <ncurses.h>
 
+
+void clear_board(Board *board){
+
+    
+
+}
+
 void init_board(Board *board)
 {
     for (int i = 0; i < ROW; i++)
