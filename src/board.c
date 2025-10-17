@@ -20,7 +20,7 @@ void init_board(Board *board)
 void draw_board(Board *board)
 {
     clear();
-    board->arr[board->apple_row][board->apple_col] = 'O';
+    //board->arr[board->apple_row][board->apple_col] = 'O';
     for (int i = ROW - 1; i >= 0; i--)
     {
         for (int j = 0; j < COLUMN; j++)

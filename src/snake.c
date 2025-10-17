@@ -50,7 +50,7 @@ void init_snake(Snake *snake){
         snake->body[i].col = -1;
     }
 
-    int n = 1;
+    int n = 5;
     for(int i = 0; i < n; i++){
         snake->body[i].row = ROW/2;
         snake->body[i].col = COLUMN/2-i;
@@ -63,15 +63,9 @@ void init_snake(Snake *snake){
 
 //0 is rechts; 1 is beneden; 2 is links; 3 is boven;
 void move_right(Board *board, Snake *snake, int row, int col){
-    switch (snake->dir) {
-        case 1 :
-            update_pos(board, snake, row , col+1);                  
-            snake->dir = 0;
-            break;
-        case 3:
-            update_pos(board, snake, row , col +1);                  
-            snake->dir = 0;
-            break;
+    if(snake->dir % 2 == 1){
+        update_pos(board, snake, row , col+1);
+        snake->dir = 0;
     }
 }
 
@@ -110,7 +104,7 @@ void draw_snake(Board *board, Snake *snake){
 
 void move_block(Board *board, Snake *snake){
     
-    init_board(board);
+    //init_board(board);
     int rs = snake->body[0].row;
     int cs = snake->body[0].col;
 
@@ -135,7 +129,7 @@ void move_block(Board *board, Snake *snake){
 }
 
 void add_tail(Board *board,Snake *snake, int row, int col){
-    init_board(board);
+    //init_board(board);
     for(int i = len_snake(snake); i >= 1; i--){
         snake->body[i].col = snake->body[i - 1].col; 
         snake->body[i].row = snake->body[i - 1].row; 
@@ -182,8 +176,10 @@ void spawn_apple(Board *board, Snake *snake){
         rs = rand() % ROW;
         cs = rand() % COLUMN;
         for(int i = 0; i < len_snake(snake); i++){
-            if(snake->body[i].row == rs && snake->body[i].col == cs)
+            if(snake->body[i].row == rs && snake->body[i].col == cs){
                 found = true;
+                break;
+            }
         }
 
     } while(found == true);
@@ -194,26 +190,20 @@ void spawn_apple(Board *board, Snake *snake){
 
      board->apple_row = rs;
      board->apple_col = cs;
-
-     
-
-     board->arr[rs][cs] = 'O';
- 
 }
 bool eat_apple(Board *board, Snake *snake){
-    for(int i = 0; i < ROW; i++){
-        for(int j = 0; j < COLUMN; j++){
-            if((snake->body[0].row == board->apple_row )&& (snake->body[0].col) == board->apple_col){
+    if((snake->body[0].row == board->apple_row )&& (snake->body[0].col) == board->apple_col){
                 return true;
-            }
-        }
     }
     return false;
 }
+
+
 void play_simulate(Board *board, Snake *snake){
     //srand(time(NULL));
 
     int delay = 100000; 
+    int pending_input = 0; 
     while(1){
         int xPos = -1;
         int yPos = -1;
@@ -243,6 +233,7 @@ void play_simulate(Board *board, Snake *snake){
                 break;
         }
         init_board(board);
+        board->arr[board->apple_row][board->apple_col] = 'O';
         move_block(board, snake);
         draw_snake(board, snake);
         if(eat_apple(board, snake) == true){
