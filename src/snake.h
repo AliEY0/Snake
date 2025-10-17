@@ -14,19 +14,23 @@ typedef struct{
     int dir; //0 is rechts; 1 is beneden; 2 is links; 3 is boven; 
 
 } Snake;
-
+void spawn_apple(Board *board, Snake *snake);
 void init_snake(Snake *snake);
 void draw_snake(Board *board, Snake *snake);
-void add_tail(Snake *snake);
+void add_tail(Board *board, Snake *snake, int row, int col);
 
 
-void update_pos(Snake *snake, int row, int col);
+void update_pos(Board *board, Snake *snake, int row, int col);
+
+void move_up(Board *board, Snake *snake, int row, int col);
+void move_down(Board *board, Snake *snake, int row, int col);
+
 void move_left(Board *board, Snake *snake, int row, int col);
+
 void move_right(Board *board, Snake *snake, int row, int col);
 void move_block(Board *board, Snake *snake);
-void top_collision(Board *board, Snake *snake, int row, int col);
-void bottom_collision(Board *board, Snake *snake, int row, int col);
 
+bool collision(Board *board, int row, int col);
 int len_snake(Snake *snake);
 
 void play_simulate(Board *board, Snake *snake);
